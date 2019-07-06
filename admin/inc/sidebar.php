@@ -38,7 +38,7 @@
             <span>Comments</span></a>
     </li>
     <li class="nav-item active">
-        <a class="nav-link" href="index.html">
+        <a class="nav-link" href="users.php">
             <i class="fas fa-user-cog"></i>
             <span>User Settings</span></a>
     </li>
