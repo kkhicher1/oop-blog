@@ -9,10 +9,10 @@
 
         <!-- Nav Item - Search Dropdown (Visible Only XS) -->
         <li class="nav-item">
-            <a class="nav-link text-dark" href="#">Add Post</a>
+            <a class="nav-link text-dark" href="add-new-post.php">Add Post</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link text-dark" href="#">Add Category</a>
+            <a class="nav-link text-dark" href="categories.php">Add Category</a>
         </li>
         <li class="nav-item">
             <a class="nav-link text-dark" href="#">Add Tag</a>

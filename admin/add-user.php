@@ -14,9 +14,7 @@ if (isset($_GET['logout'])) {
     unset($_SESSION['user']);
     header("Location:login.php");
 }
-
 extract($db->getUserData('users', $_SESSION['user']), EXTR_PREFIX_ALL, 'user');
-
 //
 if (!empty($_POST)) {
     $response = $db->addUser('users', $_POST, $_FILES);

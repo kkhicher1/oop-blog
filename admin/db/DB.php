@@ -74,4 +74,64 @@ class DB
             return "<div class='alert alert-danger'>Unable to Create New User</div>";
         }
     }
+    public function find(string $table, $col, $value)
+    {
+        $query = "SELECT * FROM " . $table . " WHERE $col='$value'";
+        $stmt = $this->dbh->prepare($query);
+        $stmt->execute();
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        if (count($result) > 0) {
+            foreach ($result as $value) {
+                return $value;
+            }
+        }
+        return "No Data Found";
+    }
+
+
+    public function updateUser(string $table, array $args, array $file, $email)
+    {
+        $photo = Utility::uploadPhoto($file);
+        if (empty($photo['name'])) {
+            $photo['name'] = "https://nulm.gov.in/images/user.png";
+        } else {
+            $photo['name'] = 'assets/avatar/' . $photo['name'];
+        }
+        $query = "UPDATE $table SET name= '" . $args['name'] . "',email='" . $args['email'] . "',password='" . $args['password'] . "',photo='" . $photo['name'] . "',role='" . $args['role'] . "' WHERE email='$email'";
+        $stmt = $this->dbh->prepare($query);
+        if ($stmt->execute()) {
+            if (empty($photo['name'])) {
+                if (!move_uploaded_file($photo["tmp_name"], 'assets/avatar/' . $photo['name'])) {
+                    return "<div class='alert alert-danger'>Photo Unable to Upload</div>";
+                };
+            }
+            return "<div class='alert alert-success'>Profile Updated!</div>";
+        } else {
+            return "<div class='alert alert-danger'>Unable to Update Profile </div>";
+        }
+    }
+    public function findData(string $table)
+    {
+        $query = "SELECT * FROM $table";
+        $stmt = $this->dbh->prepare($query);
+        $stmt->execute();
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        if (count($result) > 0) {
+            return $result;
+        }
+        return "No Data Found";
+    }
+    public function addCat($name)
+    {
+        $query = "INSERT INTO categories(name, slug) VALUES(:name, :slug)";
+        $stmt = $this->dbh->prepare($query);
+        $stmt->bindValue(":name", $name);
+        $slug = strtolower(str_replace(' ', "-", $name));
+        $stmt->bindValue(":slug", $slug);
+        if ($stmt->execute()) {
+            return "<div class='alert alert-success'>Category Added</div>";
+        } else {
+            return "<div class='alert alert-danger'>Unable to Add Category</div>";
+        }
+    }
 }

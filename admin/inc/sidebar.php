@@ -18,12 +18,12 @@
             <span>Dashboard</span></a>
     </li>
     <li class="nav-item active">
-        <a class="nav-link" href="index.html">
+        <a class="nav-link" href="all-posts.php">
             <i class="fas fa-book"></i>
             <span>Posts</span></a>
     </li>
     <li class="nav-item active">
-        <a class="nav-link" href="index.html">
+        <a class="nav-link" href="categories.php">
             <i class="fas fa-bezier-curve"></i>
             <span>Categories</span></a>
     </li>
