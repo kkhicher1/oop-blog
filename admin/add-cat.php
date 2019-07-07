@@ -20,11 +20,6 @@ if (!empty($_POST)) {
     $response = $db->addCat($_POST['name']);
 }
 
-
-
-
-
-
 ?>
 
 
