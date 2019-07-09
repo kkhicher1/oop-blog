@@ -15,7 +15,7 @@
             <a class="nav-link text-dark" href="categories.php">Add Category</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link text-dark" href="#">Add Tag</a>
+            <a class="nav-link text-dark" href="add-tag.php">Add Tag</a>
         </li>
 
         <div class="topbar-divider d-none d-sm-block"></div>

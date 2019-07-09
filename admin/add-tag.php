@@ -17,15 +17,15 @@ if (isset($_GET['logout'])) {
 extract($db->getUserData('users', $_SESSION['user']), EXTR_PREFIX_ALL, 'user');
 //
 if (!empty($_POST)) {
-    $response = $db->addCat($_POST['name']);
+    $response = $db->addTag($_POST['name']);
 }
 
 ?>
 
 
 <?php include 'inc/header.php' ?>
-<!-- Page Wrapper -->
-<div id="wrapper">
+    <!-- Page Wrapper -->
+    <div id="wrapper">
 
     <!-- Sidebar -->
     <?php include 'inc/sidebar.php'; ?>
@@ -44,16 +44,16 @@ if (!empty($_POST)) {
             <!-- oop box -->
             <div class='oop-box'>
                 <div class="col-12">
-                    <h2 class="text-center bg-success text-white mb-4">Add New Category</h2>
+                    <h2 class="text-center bg-success text-white mb-4">Add New Tag</h2>
                     <?= $response ?? '' ?>
                 </div>
                 <div class="col-6 offset-3">
                     <form method="post">
                         <div class="form-group">
                             <label for="name">Name</label>
-                            <input id="name" class="form-control" type="text" name="name" placeholder='Enter Category Name'>
+                            <input id="name" class="form-control" type="text" name="name" placeholder='Enter Tag Name'>
                         </div>
-                        <button class="btn btn-success btn-block" type="submit">Add New Category</button>
+                        <button class="btn btn-success btn-block" type="submit">Add New Tag</button>
                     </form>
                 </div>
 
@@ -69,4 +69,4 @@ if (!empty($_POST)) {
 
     </div>
     <!-- End of Page Wrapper -->
-    <?php include 'inc/footer.php'; ?>
+<?php include 'inc/footer.php'; ?>
