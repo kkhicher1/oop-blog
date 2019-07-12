@@ -1,6 +1,6 @@
 <?php
 
-require_once 'inc/functions.php';
+// require_once 'inc/functions.php';
 class DB
 {
     protected $dbh;
@@ -134,38 +134,40 @@ class DB
             return "<div class='alert alert-danger'>Unable to Add Category</div>";
         }
     }
-    public function getCatName($postid){
-        $q = "SELECT categories.name FROM posts INNER JOIN categories ON posts.category_id=categories.id WHERE posts.id=".$postid;
+    public function getCatName($postid)
+    {
+        $q = "SELECT categories.name FROM posts INNER JOIN categories ON posts.category_id=categories.id WHERE posts.id=" . $postid;
         $stmt = $this->dbh->prepare($q);
         $stmt->execute();
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        foreach ($result as $cat_name){
+        foreach ($result as $cat_name) {
             return $cat_name['name'];
         }
         return false;
     }
-    public function getCat(){
+    public function getCat()
+    {
         $q = "SELECT * FROM categories";
         $stmt = $this->dbh->prepare($q);
         $stmt->execute();
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return $result;
     }
-    public function storePost($title, $cat_id, $content, String $status){
+    public function storePost($title, $cat_id, $content, String $status)
+    {
         $query = "INSERT INTO posts(title, slug, content, status, category_id) VALUES(:title, :slug, :content, :status, :category_id)";
         $slug = strtolower(str_replace(' ', "-", $title));
         $stmt = $this->dbh->prepare($query);
-        $stmt->bindValue(':title',$title);
-        $stmt->bindValue(':slug',$slug);
-        $stmt->bindValue(':content',$content);
-        $stmt->bindValue(':status',$status);
-        $stmt->bindValue(':category_id',$cat_id);
+        $stmt->bindValue(':title', $title);
+        $stmt->bindValue(':slug', $slug);
+        $stmt->bindValue(':content', $content);
+        $stmt->bindValue(':status', $status);
+        $stmt->bindValue(':category_id', $cat_id);
         if ($stmt->execute()) {
             return "<div class='alert alert-success'>Post Stored</div>";
         } else {
             return "<div class='alert alert-danger'>Unable to Store Post</div>";
         }
-
     }
     public function addTag($name)
     {
@@ -180,6 +182,39 @@ class DB
             return "<div class='alert alert-danger'>Unable to Add Tag</div>";
         }
     }
+
+    public function getTags()
+    {
+        $q = "SELECT * FROM tags";
+        $stmt = $this->dbh->prepare($q);
+        $stmt->execute();
+        $result = $stmt->fetchAll(PDO::FETCH_OBJ);
+        return $result;
+    }
+
+    public function getPost($limit = null, $offset = null)
+    {
+        if ($limit == null) {
+            $query = "SELECT * FROM posts WHERE status='publish' ORDER BY created_at DESC, id DESC";
+        } else {
+            if ($offset == null) {
+                $query = "SELECT * FROM posts WHERE status='publish' ORDER BY created_at DESC, id DESC LIMIT $limit";
+            } else {
+                $query = "SELECT * FROM posts WHERE status='publish' ORDER BY created_at DESC, id DESC LIMIT " . $offset . ", " . $limit;
+            }
+        }
+        $stmt = $this->dbh->prepare($query);
+        $stmt->execute();
+        $results = $stmt->fetchAll(PDO::FETCH_OBJ);
+        return $results;
+    }
+    public function getPostByCat($id, $limit = '')
+    {
+        $q = "SELECT posts.* FROM categories INNER JOIN posts ON categories.id=posts.category_id WHERE category_id=" . $id;
+        $stmt = $this->dbh->prepare($q);
+        $stmt->execute();
+        $result = $stmt->fetchAll(PDO::FETCH_OBJ);
+
+        return $result;
+    }
 }
-
-
