@@ -7,17 +7,21 @@
             <div class="col-md-5">
                 <div class="footer-widget">
                     <div class="footer-logo">
-                        <a href="/" class="logo"><img src="./img/logo.png" alt=""></a>
+                        <?php
+                        if (!empty($site->site_logo)) {
+                            ?>
+                            <a href="/" class="logo"><img class="img-fluid" src="http://oopblog.test/admin/<?= $site->site_logo; ?>" alt="<?= $site->site_name; ?>" width="75px" height="auto"></a>
+                        <?php
+                        } else { ?>
+                            <h3><a href="/" class="logo"><?= $site->site_name ?? "Demo Site"; ?></a> <small><sub><?= $site->site_subtitle ?? ""; ?></sub></small></h3>
+                        <?php }
+
+                        ?>
                     </div>
                     <div class="footer-copyright">
-                        <span>&copy;
-                            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                            Copyright &copy;
-                            <script>
-                                document.write(new Date().getFullYear());
-                            </script> All rights reserved | This
-                            template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-                            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></span>
+                        <span>
+                            <?= $site->footer_copyright ?? ''; ?> <a href="/"><?= $site->site_name ?? 'Home'; ?></a>
+                        </span>
                     </div>
                 </div>
             </div>
@@ -54,10 +58,16 @@
             <div class="col-md-3">
                 <div class="footer-widget">
                     <h3 class="footer-title">Join our Newsletter</h3>
+                    <?php
+                    if (isset($newsletter_response)) {
+                        echo $newsletter_response['error'] ?? $newsletter_response['success'];
+                    }
+
+                    ?>
                     <div class="footer-newsletter">
                         <form>
-                            <input class="input" type="email" name="newsletter" placeholder="Enter your email">
-                            <button class="newsletter-btn"><i class="fa fa-paper-plane"></i></button>
+                            <input class="input" type="text" name="newsletter" placeholder="Enter your email">
+                            <button class="newsletter-btn" type="submit"><i class="fa fa-paper-plane"></i></button>
                         </form>
                     </div>
                     <ul class="footer-social">
@@ -79,6 +89,7 @@
 <!-- jQuery Plugins -->
 <script src="js/jquery.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
+<?= html_entity_decode($site->footer_code, ENT_QUOTES) ?? ''; ?>
 <script src="js/main.js"></script>
 
 </body>

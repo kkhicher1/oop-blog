@@ -43,7 +43,7 @@
             <span>User Settings</span></a>
     </li>
     <li class="nav-item active">
-        <a class="nav-link" href="index.html">
+        <a class="nav-link" href="settings.php">
             <i class="fas fa-cogs"></i>
             <span>Settings</span></a>
     </li>

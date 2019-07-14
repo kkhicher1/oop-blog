@@ -217,4 +217,62 @@ class DB
 
         return $result;
     }
+    public function getSiteSettings()
+    {
+        $q = "SELECT * FROM settings";
+        $stmt = $this->dbh->prepare($q);
+        $stmt->execute();
+        $results = $stmt->fetchAll(PDO::FETCH_OBJ);
+        foreach ($results as $result) {
+            return $result;
+        }
+    }
+    public function setSiteSettings($site_name = '', $site_subtitle = '', $site_logo = '', $footer_copyright = '')
+    {
+
+        if (is_array($site_logo)) {
+            $site_logo = Utility::uploadPhoto($site_logo);
+            if (!empty($site_logo['name'])) {
+                $logo = 'assets/site-logo/' . $site_logo['name'];
+            } else {
+                $logo = '';
+            }
+        } else {
+            $logo = '';;
+        }
+        $query = "UPDATE settings SET site_name='$site_name', site_subtitle='$site_subtitle', site_logo='$logo', footer_copyright='$footer_copyright' WHERE id=1";
+        $stmt = $this->dbh->prepare($query);
+        if ($stmt->execute()) {
+            if (!empty($logo)) {
+                if (!move_uploaded_file($site_logo["tmp_name"], $logo)) {
+                    return "<div class='alert alert-danger'>Site Logo Unable to Upload</div>";
+                };
+            }
+            return "<div class='alert alert-success'>Site Setting Saved</div>";
+        } else {
+            return "<div class='alert alert-danger'>Unable to Save Site Settings</div>";
+        }
+    }
+    public function newsletter($email)
+    {
+        if (strpos($email, '@') == FALSE) {
+            return ['error' => "<div class='alert alert-danger'>Provide Valid Email</div>"];
+        }
+        $query = "INSERT INTO newsletter(email) VALUES(:email)";
+        $stmt = $this->dbh->prepare($query);
+        $stmt->bindValue(":email", $email);
+        if ($stmt->execute()) {
+            return ['success' => "<div class='alert alert-success'>Subscription Success</div>"];
+        }
+    }
+    public function setAnalyticsSettings($header_code = '', $footer_code = '')
+    {
+        $query = "UPDATE settings SET header_code='" . htmlentities($header_code, ENT_QUOTES) . "', footer_code='" . htmlentities($footer_code, ENT_QUOTES) . "' WHERE id=1";
+        $stmt = $this->dbh->prepare($query);
+        if ($stmt->execute()) {
+            return "<div class='alert alert-success'>Analytics Setting Saved</div>";
+        } else {
+            return "<div class='alert alert-danger'>Unable to Save Analytics Settings </div>";
+        }
+    }
 }

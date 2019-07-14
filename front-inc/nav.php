@@ -7,7 +7,16 @@
             <div class="container">
                 <!-- logo -->
                 <div class="nav-logo">
-                    <a href="/" class="logo"><img src="./img/logo.png" alt=""></a>
+                    <?php
+                    if (!empty($site->site_logo)) {
+                        ?>
+                        <a href="/" class="logo"><img class="img-fluid" src="http://oopblog.test/admin/<?= $site->site_logo; ?>" alt="<?= $site->site_name; ?>" width="75px" height="auto"></a>
+                    <?php
+                    } else { ?>
+                        <h3><a href="/" class="logo"><?= $site->site_name ?? "Demo Site"; ?></a> <small><sub><?= $site->site_subtitle ?? ""; ?></sub></small></h3>
+                    <?php }
+
+                    ?>
                 </div>
                 <!-- /logo -->
 

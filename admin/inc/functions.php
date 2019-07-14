@@ -14,15 +14,12 @@ class Utility extends DB
     }
     public static function uploadPhoto(array $file)
     {
-        foreach ($file as $value) {
-
-            if ($value['size'] < 1588352) {
-                if ($value['type'] == "image/jpeg" || $value['type'] == "image/png") {
-                    return $value;
-                }
-            } else {
-                return false;
+        if ($file['size'] < 1588352) {
+            if ($file['type'] == "image/jpeg" || $file['type'] == "image/png") {
+                return $file;
             }
+        } else {
+            return false;
         }
     }
 }
