@@ -35,11 +35,8 @@ $post = $db->find('posts', 'slug', $_GET['post']);
 					<div class="main-post">
 						<h3><?= $post['title']; ?></h3>
 						<!-- ad -->
-						<div class="section-row text-center">
-							<a href="#" style="display: inline-block;margin: auto;">
-								<img class="img-responsive" src="./img/ad-2.jpg" alt="">
-							</a>
-						</div>
+						<?= $below_header ?>
+
 						<!-- ad -->
 						<p><?= $post['content']; ?></p>
 					</div>
@@ -54,11 +51,7 @@ $post = $db->find('posts', 'slug', $_GET['post']);
 				</div>
 
 				<!-- ad -->
-				<div class="section-row text-center">
-					<a href="#" style="display: inline-block;margin: auto;">
-						<img class="img-responsive" src="./img/ad-2.jpg" alt="">
-					</a>
-				</div>
+				<?= $below_content ?>
 				<!-- ad -->
 
 				<!-- author -->

@@ -51,17 +51,8 @@ $cat = $db->find('categories', 'slug', $_GET['cat']);
 					<?php
 					}
 					?>
-
-
-
 					<!-- ad -->
-					<div class="col-md-12">
-						<div class="section-row">
-							<a href="#">
-								<img class="img-responsive center-block" src="./img/ad-2.jpg" alt="">
-							</a>
-						</div>
-					</div>
+					<?= $below_content ?>
 					<!-- ad -->
 
 					<div class="col-md-12">

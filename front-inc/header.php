@@ -10,7 +10,13 @@ $site = $db->getSiteSettings();
 if (isset($_GET['newsletter'])) {
     $newsletter_response = $db->newsletter($_GET['newsletter']);
 }
+$ad = $db->getAds();
 
+$no_ads = '<div class="section-row text-center"><a href="#" style="display: inline-block;margin: auto;"><img class="img-responsive" src="./img/ad-2.jpg" alt=""></a></div>';
+
+$below_header = (isset($ad[0]->below_header)) ? html_entity_decode($ad[0]->below_header, ENT_QUOTES) : $no_ads;
+$below_content = (isset($ad[0]->below_content)) ? html_entity_decode($ad[0]->below_content, ENT_QUOTES) : $no_ads;
+$sidebar = (isset($ad[0]->sidebar)) ? html_entity_decode($ad[0]->sidebar, ENT_QUOTES) : $no_ads;
 
 ?>
 <!DOCTYPE html>

@@ -17,6 +17,11 @@ if (isset($_GET['logout'])) {
 
 extract($db->getUserData('users', $_SESSION['user']), EXTR_PREFIX_ALL, 'user');
 
+if (!empty($_POST)) {
+    $response = $db->addMenu($_POST['name'], $_POST['redirect_slug']);
+}
+
+
 ?>
 
 
@@ -46,6 +51,43 @@ extract($db->getUserData('users', $_SESSION['user']), EXTR_PREFIX_ALL, 'user');
                     <a href='settings.php' class="btn btn-primary mr-2" type="button">Site Setting</a>
                     <a href='posts-setting.php' class="btn btn-primary mr-2" type="button">Posts Setting</a>
                     <a href='anaytics-setting.php' class="btn btn-primary mr-2" type="button">Site Analytics Setting</a>
+                </div>
+                <div class="col-12">
+                    <h2 class="text-center bg-success text-white mb-4">Add New Menu</h2>
+                    <?= $response ?? '' ?>
+                </div>
+                <div class="col-6 offset-3">
+                    <form method="post">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input id="name" class="form-control" type="text" name="name" placeholder='Enter Name'>
+                        </div>
+                        <div class="form-group">
+                            <label for="redirect_slug">Redirect Slug</label>
+                            <input id="redirect_slug" class="form-control" type="text" name="redirect_slug" placeholder='Enter Redirect Slug'>
+                        </div>
+                        <button class="btn btn-success btn-block" type="submit">Save New Menu</button>
+                    </form>
+                </div>
+                <div class="col-8 offset-3 mt-2">
+                    <table class="table table-bordered">
+                        <tbody>
+                            <tr>
+                                <th>Name</th>
+                                <th>Redirected To</th>
+                            </tr>
+                            <?php
+                            foreach ($db->getMenus() as $menu) {
+                                echo "<tr>
+                                        <td>{$menu->name}</td>
+                                        <td>{$menu->redirect_slug}</td>
+                                        <td><a href='edit.php?from=menus&id={$menu->id}' class='btn btn-warning btn-sm'>Edit</a>
+                                        <a href='delete.php?from=menus&id={$menu->id}' class='btn btn-danger btn-sm'>Delete</a></td>
+                                    </tr>";
+                            }
+                            ?>
+                        </tbody>
+                    </table>
                 </div>
             </div>
             <!-- end of oop box -->

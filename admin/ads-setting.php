@@ -17,6 +17,10 @@ if (isset($_GET['logout'])) {
 
 extract($db->getUserData('users', $_SESSION['user']), EXTR_PREFIX_ALL, 'user');
 
+if (!empty($_POST)) {
+    $response = $db->setAds($_POST['below_header'], $_POST['below_content'], $_POST['sidebar']);
+}
+$ads = $db->getAds();
 ?>
 
 
@@ -46,6 +50,27 @@ extract($db->getUserData('users', $_SESSION['user']), EXTR_PREFIX_ALL, 'user');
                     <a href='menus-setting.php' class="btn btn-primary mr-2" type="button">Menus Setting</a>
                     <a href='posts-setting.php' class="btn btn-primary mr-2" type="button">Posts Setting</a>
                     <a href='anaytics-setting.php' class="btn btn-primary mr-2" type="button">Site Analytics Setting</a>
+                </div>
+                <div class="col-12">
+                    <h2 class="text-center bg-success text-white mb-4">Ads Section</h2>
+                    <?= $response ?? '' ?>
+                </div>
+                <div class="col-6 offset-3">
+                    <form method="post" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label for="below_header">Below Header Ad</label>
+                            <textarea id="below_header" class="form-control" name="below_header" rows="3"><?= $ads[0]->below_header; ?></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="below_content">Below Content Ad</label>
+                            <textarea id="below_content" class="form-control" name="below_content" rows="3"><?= $ads[0]->below_content; ?></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="sidebar">Sidebar Ad</label>
+                            <textarea id="my-sidebar" class="form-control" name="sidebar" rows="3"><?= $ads[0]->sidebar; ?></textarea>
+                        </div>
+                        <button class="btn btn-success btn-block" type="submit">Save Ad Setting</button>
+                    </form>
                 </div>
 
             </div>

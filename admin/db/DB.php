@@ -1,5 +1,12 @@
 <?php
 
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+require_once 'Exception.php';
+require_once 'PHPMailer.php';
+require_once 'SMTP.php';
+
 // require_once 'inc/functions.php';
 class DB
 {
@@ -164,7 +171,20 @@ class DB
         $stmt->bindValue(':status', $status);
         $stmt->bindValue(':category_id', $cat_id);
         if ($stmt->execute()) {
-            return "<div class='alert alert-success'>Post Stored</div>";
+            if ($status == 'publish') {
+                $settings = $this->getMailSettings();
+                if ($settings->post_mail) {
+                    $emails = $this->newsLetterMails();
+                    foreach ($emails as $email) {
+                        $result = $this->sendMail($email->email, substr($content, 0, 75) . "..... <a class='btn btn-primary btn-sm' href='http://oopblog.test/single-post.php?post=$slug'>Read More</a>");
+                    }
+                } else {
+                    $result = '';
+                }
+            } else {
+                $result = '';
+            }
+            return "<div class='alert alert-success'>Post Stored " . $result . "</div>";
         } else {
             return "<div class='alert alert-danger'>Unable to Store Post</div>";
         }
@@ -274,5 +294,139 @@ class DB
         } else {
             return "<div class='alert alert-danger'>Unable to Save Analytics Settings </div>";
         }
+    }
+    public function addMenu($name, $redirect_slug)
+    {
+        $query = "INSERT INTO menus(name, redirect_slug) VALUES('$name', '$redirect_slug')";
+        $stmt = $this->dbh->prepare($query);
+        if ($stmt->execute()) {
+            return "<div class='alert alert-success'>New Menu Saved</div>";
+        } else {
+            return "<div class='alert alert-danger'>Unable to Save Menu</div>";
+        }
+    }
+    public function getMenus()
+    {
+        $query = "SELECT * FROM menus";
+        $stmt = $this->dbh->prepare($query);
+        $stmt->execute();
+        $result = $stmt->fetchAll(PDO::FETCH_OBJ);
+        if (count($result) > 0) {
+            return $result;
+        }
+        return [];
+    }
+
+
+    //delete data
+    public function delete(string $table, int $id)
+    {
+        $query = "DELETE FROM $table WHERE id=" . $id . " LIMIT 1";
+        $stmt = $this->dbh->prepare($query);
+        if ($stmt->execute()) {
+            header('Location:' . $_SERVER['HTTP_REFERER']);
+        } else {
+            header('Location:' . $_SERVER['HTTP_REFERER']);
+        }
+    }
+    public function updateMenu($id, $name, $redirect_slug)
+    {
+        $query = "UPDATE menus SET name='$name', redirect_slug='$redirect_slug' WHERE id=" . $id;
+        $stmt = $this->dbh->prepare($query);
+        if ($stmt->execute()) {
+            header('Location:menus-setting.php');
+        } else {
+            header('Location:' . $_SERVER['HTTP_REFERER']);
+        }
+    }
+    //ads setting add and update data
+
+    public function setAds($below_header = null, $below_content = null, $sidebar = null)
+    {
+        $query = "UPDATE ads SET below_header='" . htmlentities($below_header, ENT_QUOTES) . "', below_content='" . htmlentities($below_content, ENT_QUOTES) . "', sidebar='" . htmlentities($sidebar, ENT_QUOTES) . "' WHERE id=1";
+        $stmt = $this->dbh->prepare($query);
+        if ($stmt->execute()) {
+            return "<div class='alert alert-success'>New Ads Setting Saved</div>";
+        } else {
+            return "<div class='alert alert-danger'>Unable to Save Ads Setting</div>";
+        }
+    }
+    public function getAds()
+    {
+        $query = "SELECT * FROM ads";
+        $stmt = $this->dbh->prepare($query);
+        $stmt->execute();
+        $result = $stmt->fetchAll(PDO::FETCH_OBJ);
+        if (count($result) > 0) {
+            return $result;
+        }
+        return [];
+    }
+
+    //mail settings
+    public function mailSetting($host, $port, $username, $password, $tls, $post_mail)
+    {
+        $query = "UPDATE mailsetting SET host= '$host' , port= '$port', username = '$username', password='$password', tls='$tls', post_mail = '$post_mail' WHERE id=1";
+        $stmt = $this->dbh->prepare($query);
+        if ($stmt->execute()) {
+            return "<div class='alert alert-success'>New Mail Setting Saved</div>";
+        } else {
+            return "<div class='alert alert-danger'>Unable to Save Mail Setting</div>";
+        }
+    }
+    public function getMailSettings()
+    {
+        $query = "SELECT * FROM mailsetting";
+        $stmt = $this->dbh->prepare($query);
+        $stmt->execute();
+        $results = $stmt->fetchAll(PDO::FETCH_OBJ);
+        if (count($results) > 0) {
+            foreach ($results as $result) {
+                return $result;
+            }
+        }
+        return [];
+    }
+    public function sendMail($email, $content)
+    {
+        $settings = $this->getMailSettings();
+        $mail = new PHPMailer(true);
+
+        $mail->SMTPDebug = 0;
+        $mail->isSMTP(); // Set mailer to use SMTP
+        $mail->Host = $settings->host; // Specify main and backup SMTP servers
+        $mail->SMTPAuth = true; // Enable SMTP authentication
+        $mail->Username = $settings->username; // SMTP username
+        $mail->Password = $settings->password; // SMTP password
+        $mail->SMTPSecure = $settings->tls ?? 'tls'; // Enable TLS encryption, `ssl` also accepted
+        $mail->Port = $settings->port; // TCP port to connect to
+
+        //Recipients
+        $mail->setFrom('oopblogtest@mail.com', 'Newsletter');
+        $mail->addAddress($email, 'Oop Blog Viewer'); // Add a recipient
+
+        // Content
+        $mail->isHTML(true); // Set email format to HTML
+        $mail->Subject = 'New Post Published';
+        $mail->Body = $content;
+
+        if ($settings->post_mail) {
+            if ($mail->send()) {
+                return "Mail Sent";
+            } else {
+                return "Unable to send mail";
+            }
+        }
+    }
+    public function newsLetterMails()
+    {
+        $query = "SELECT * FROM newsletter";
+        $stmt = $this->dbh->prepare($query);
+        $stmt->execute();
+        $results = $stmt->fetchAll(PDO::FETCH_OBJ);
+        if (count($results) > 0) {
+            return $results;
+        }
+        return [];
     }
 }
