@@ -1,3 +1,10 @@
+<?php
+if (!defined('footer')) {
+    exit('you are not authrise to access this page');
+}
+?>
+
+
 <!-- Scroll to Top Button-->
 <a class="scroll-to-top rounded" href="#page-top">
     <i class="fas fa-angle-up"></i>

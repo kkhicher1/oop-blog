@@ -1,8 +1,13 @@
 <?php
+define('header', true);
+define('sidebar', true);
+define('footer', true);
+define('reply', true);
+define('comment', true);
 include 'front-inc/header.php';
 
 $post = $db->find('posts', 'slug', $_GET['post']);
-
+$cat = $db->getCatName($post['id']);
 ?>
 <!-- Page Header -->
 <div id="post-header" class="page-header">
@@ -11,7 +16,7 @@ $post = $db->find('posts', 'slug', $_GET['post']);
 		<div class="row">
 			<div class="col-md-10">
 				<div class="post-meta">
-					<a class="post-category cat-2" href="category.html"><?= $db->getCatName($post['id']); ?></a>
+					<a class="post-category cat-2" href="category.php?cat=<?= $cat['slug']; ?>"><?= $cat['name']; ?></a>
 					<span class="post-date"><?= $post['created_at']; ?></span>
 				</div>
 				<h1><?= $post['title']; ?></h1>
@@ -100,4 +105,6 @@ $post = $db->find('posts', 'slug', $_GET['post']);
 <!-- /section -->
 
 <!-- Footer -->
-<?php include 'front-inc/footer.php'; ?>
+<?php
+include 'front-inc/footer.php';
+?>

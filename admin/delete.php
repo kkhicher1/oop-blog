@@ -1,6 +1,9 @@
 <?php
 session_start();
 session_regenerate_id(true);
+define('admin_header', true);
+define('db', true);
+define('function', true);
 require_once 'inc/functions.php';
 require_once 'db/DB.php';
 

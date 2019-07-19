@@ -1,4 +1,7 @@
 <?php
+
+namespace PHPMailer\PHPMailer;
+
 /**
  * PHPMailer Exception class.
  * PHP Version 5.5.
@@ -18,7 +21,10 @@
  * FITNESS FOR A PARTICULAR PURPOSE.
  */
 
-namespace PHPMailer\PHPMailer;
+
+if (!defined('exception')) {
+    exit("Your are Not Authrise to check this Part");
+}
 
 /**
  * PHPMailer exception handler.

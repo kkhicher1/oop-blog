@@ -1,3 +1,14 @@
+<?php
+if (!defined('admin_header')) {
+    exit('you are not authrise to access this page');
+}
+define('sidebar', true);
+define('top', true);
+define('copyright', true);
+define('footer', true);
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 

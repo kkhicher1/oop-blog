@@ -1,6 +1,9 @@
 <?php
 session_start();
 session_regenerate_id(true);
+define('admin_header', true);
+define('db', true);
+define('function', true);
 require_once 'inc/functions.php';
 require_once 'db/DB.php';
 
@@ -24,8 +27,8 @@ if (!empty($_POST)) {
 
 
 <?php include 'inc/header.php' ?>
-    <!-- Page Wrapper -->
-    <div id="wrapper">
+<!-- Page Wrapper -->
+<div id="wrapper">
 
     <!-- Sidebar -->
     <?php include 'inc/sidebar.php'; ?>
@@ -69,4 +72,4 @@ if (!empty($_POST)) {
 
     </div>
     <!-- End of Page Wrapper -->
-<?php include 'inc/footer.php'; ?>
+    <?php include 'inc/footer.php'; ?>

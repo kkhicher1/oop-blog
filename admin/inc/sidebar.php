@@ -1,3 +1,10 @@
+<?php
+if (!defined('sidebar')) {
+    exit('you are not authrise to access this page');
+}
+?>
+
+
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
     <!-- Sidebar - Brand -->

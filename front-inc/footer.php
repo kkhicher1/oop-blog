@@ -1,3 +1,11 @@
+<?php
+
+if (!defined('footer')) {
+    exit('You are not authrise to check this page');
+}
+
+
+?>
 <!-- Footer -->
 <footer id="footer">
     <!-- container -->

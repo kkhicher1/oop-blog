@@ -1,3 +1,11 @@
+<?php
+
+if (!defined('sidebar')) {
+    exit('You are not authrise to check this page');
+}
+
+
+?>
 <div class="col-md-4">
     <!-- ad -->
     <?= $sidebar ?>

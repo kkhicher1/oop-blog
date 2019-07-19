@@ -1,6 +1,9 @@
 <?php
 session_start();
 session_regenerate_id(true);
+define('admin_header', true);
+define('db', true);
+define('function', true);
 require_once 'inc/functions.php';
 require_once 'db/DB.php';
 
@@ -21,8 +24,8 @@ extract($db->getUserData('users', $_SESSION['user']), EXTR_PREFIX_ALL, 'user');
 
 
 <?php include 'inc/header.php' ?>
-    <!-- Page Wrapper -->
-    <div id="wrapper">
+<!-- Page Wrapper -->
+<div id="wrapper">
 
     <!-- Sidebar -->
     <?php include 'inc/sidebar.php'; ?>
@@ -82,4 +85,4 @@ extract($db->getUserData('users', $_SESSION['user']), EXTR_PREFIX_ALL, 'user');
 
     </div>
     <!-- End of Page Wrapper -->
-<?php include 'inc/footer.php'; ?>
+    <?php include 'inc/footer.php'; ?>

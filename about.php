@@ -1,5 +1,5 @@
 <?php
-
+define('header', true);
 include 'front-inc/header.php';
 
 ?>
@@ -61,7 +61,11 @@ include 'front-inc/header.php';
 			</div>
 
 			<!-- aside -->
-			<?php include 'front-inc/sidebar.php' ?>
+			<?php
+			define('sidebar', true);
+
+			include 'front-inc/sidebar.php';
+			?>
 			<!-- /aside -->
 		</div>
 		<!-- /row -->
@@ -70,4 +74,8 @@ include 'front-inc/header.php';
 </div>
 <!-- /section -->
 <!-- Footer -->
-<?php include 'front-inc/footer.php' ?>
+<?php
+define('footer', true);
+include 'front-inc/footer.php';
+
+?>

@@ -1,4 +1,11 @@
 <?php
+if (!defined('db')) {
+    exit();
+}
+define('config', true);
+define('phpmailer', true);
+define('smtp', true);
+define('exception', true);
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
@@ -143,12 +150,13 @@ class DB
     }
     public function getCatName($postid)
     {
-        $q = "SELECT categories.name FROM posts INNER JOIN categories ON posts.category_id=categories.id WHERE posts.id=" . $postid;
+        $q = "SELECT categories.name,categories.slug FROM posts INNER JOIN categories ON posts.category_id=categories.id WHERE posts.id=" . $postid;
         $stmt = $this->dbh->prepare($q);
         $stmt->execute();
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
         foreach ($result as $cat_name) {
-            return $cat_name['name'];
+            $category = ['name' => $cat_name['name'], 'slug' => $cat_name['slug']];
+            return $category;
         }
         return false;
     }
@@ -428,5 +436,31 @@ class DB
             return $results;
         }
         return [];
+    }
+
+
+
+
+    //post settings
+
+    public function getPostSettings()
+    {
+        $q = "SELECT * FROM postsettings";
+        $stmt = $this->dbh->prepare($q);
+        $stmt->execute();
+        $results = $stmt->fetchAll(PDO::FETCH_OBJ);
+        foreach ($results as $result) {
+            return $result;
+        }
+    }
+    public function setPostSettings($post_length = 0, $no_of_posts = 0, $sidebar_active = 0)
+    {
+        $query = "UPDATE postsettings SET post_content_length='" . $post_length . "', no_of_posts='" . $no_of_posts . "', sidebar_active='" . $sidebar_active . "' WHERE id=1";
+        $stmt = $this->dbh->prepare($query);
+        if ($stmt->execute()) {
+            return "<div class='alert alert-success'>New Post Setting Saved</div>";
+        } else {
+            return "<div class='alert alert-danger'>Unable to Save Post Setting</div>";
+        }
     }
 }

@@ -1,5 +1,10 @@
 <?php
 
+if (!defined('header')) {
+    exit('You are not authrise to check this page');
+}
+
+define('db', true);
 include "admin/db/DB.php";
 // include "admin/inc/functions.php";
 
@@ -17,6 +22,17 @@ $no_ads = '<div class="section-row text-center"><a href="#" style="display: inli
 $below_header = (isset($ad[0]->below_header)) ? html_entity_decode($ad[0]->below_header, ENT_QUOTES) : $no_ads;
 $below_content = (isset($ad[0]->below_content)) ? html_entity_decode($ad[0]->below_content, ENT_QUOTES) : $no_ads;
 $sidebar = (isset($ad[0]->sidebar)) ? html_entity_decode($ad[0]->sidebar, ENT_QUOTES) : $no_ads;
+
+//post settings
+$post_setting = $db->getPostSettings();
+
+$page = $_GET['page'] ?? 1;
+$total_records = count($db->findData('posts'));
+$record_per_page = $post_setting->no_of_posts;
+$start_from = (($page - 1) * $record_per_page) + 8;
+$total_pages = ceil($total_records / $record_per_page);
+
+
 
 ?>
 <!DOCTYPE html>
@@ -40,4 +56,8 @@ $sidebar = (isset($ad[0]->sidebar)) ? html_entity_decode($ad[0]->sidebar, ENT_QU
 </head>
 
 <body>
-    <?php include 'nav.php' ?>
+    <?php
+    define('nav', true);
+    include 'nav.php'
+
+    ?>

@@ -1,3 +1,11 @@
+<?php
+
+if (!defined('comment')) {
+    exit('You are not authrise to check this page');
+}
+
+?>
+
 <!-- comments -->
 <div class="section-row">
     <div class="section-title">

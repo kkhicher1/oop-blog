@@ -1,4 +1,7 @@
 <?php
+define('header', true);
+define('sidebar', true);
+define('footer', true);
 include 'front-inc/header.php';
 
 $cat = $db->find('categories', 'slug', $_GET['cat']);
@@ -36,13 +39,13 @@ $cat = $db->find('categories', 'slug', $_GET['cat']);
 						<!-- post -->
 						<div class="col-md-12">
 							<div class="post post-row">
-								<a class="post-img" href="blog-post.html"><img src="./img/post-2.jpg" alt=""></a>
+								<a class="post-img" href="single-post.php?post=<?= $post->slug ?>"><img src="./img/post-2.jpg" alt=""></a>
 								<div class="post-body">
 									<div class="post-meta">
 										<a class="post-category cat-2" href="#"><?= $cat['name']; ?></a>
 										<span class="post-date"><?= $post->created_at; ?></span>
 									</div>
-									<h3 class="post-title"><a href="blog-post.html"><?= $post->title; ?></a></h3>
+									<h3 class="post-title"><a href="single-post.php?post=<?= $post->slug ?>"><?= $post->title; ?></a></h3>
 									<p><?= substr($post->content, 0, 150); ?>..... <a class="btn btn-primary btn-sm" href='single-post.php?post=<?= $post->slug ?>'>Read More</a></p>
 								</div>
 							</div>

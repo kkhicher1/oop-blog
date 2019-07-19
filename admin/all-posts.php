@@ -1,9 +1,9 @@
 <?php
-
-
-
 session_start();
 session_regenerate_id(true);
+define('admin_header', true);
+define('db', true);
+define('function', true);
 require_once 'inc/functions.php';
 require_once 'db/DB.php';
 
@@ -59,10 +59,11 @@ extract($db->getUserData('users', $_SESSION['user']), EXTR_PREFIX_ALL, 'user');
                         </tr>
                         <?php
                         foreach ($db->findData('posts') as $value) {
+                            $cat = $db->getCatName($value['id']);
                             echo "<tr>
                                     <td>{$value['title']}</td>
                                     <td>{$value['status']}</td>
-                                    <td>{$db->getCatName($value['id'])}</td>
+                                    <td>{$cat['name']}</td>
                                     <td>{$value['created_at']}</td>
                                     <td>{$value['updated_at']}</td>
                                     <td><a class='btn btn-warning btn-sm' href='edit-post.php?id={$value['id']}'>Edit</a></td>

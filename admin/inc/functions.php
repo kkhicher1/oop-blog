@@ -1,8 +1,10 @@
 <?php
 
-require_once 'db/DB.php';
+if (!defined('function')) {
+    exit();
+}
 
-class Utility extends DB
+class Utility
 {
     public static function is_logged_in()
     {
@@ -20,6 +22,12 @@ class Utility extends DB
             }
         } else {
             return false;
+        }
+    }
+    public static function checkDirectAccess($name)
+    {
+        if (!defined($name)) {
+            exit('You are not authrise to access this page');
         }
     }
 }

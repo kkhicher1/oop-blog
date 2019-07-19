@@ -1,6 +1,9 @@
 <?php
 session_start();
 session_regenerate_id(true);
+define('admin_header', true);
+define('db', true);
+define('function', true);
 require_once 'inc/functions.php';
 require_once 'db/DB.php';
 
@@ -17,10 +20,10 @@ if (isset($_GET['logout'])) {
 
 extract($db->getUserData('users', $_SESSION['user']), EXTR_PREFIX_ALL, 'user');
 
-if (!empty($_POST)){
-    if ($_POST['post_action'] == 'publish'){
+if (!empty($_POST)) {
+    if ($_POST['post_action'] == 'publish') {
         $response = $db->storePost($_POST['title'], $_POST['category_id'], $_POST['content'], $_POST['post_action']);
-    }else if($_POST['post_action'] == 'draft'){
+    } else if ($_POST['post_action'] == 'draft') {
         $response = $db->storePost($_POST['title'], $_POST['category_id'], $_POST['content'], $_POST['post_action']);
     }
 }
@@ -54,7 +57,7 @@ if (!empty($_POST)){
                     <?= $response ?? '' ?>
                 </div>
                 <div class="col-6 offset-3">
-                    <form method="post" >
+                    <form method="post">
                         <div class="form-group">
                             <label for="title">Title</label>
                             <input id="title" class="form-control" type="text" name="title" placeholder='Enter Title'>
@@ -63,13 +66,13 @@ if (!empty($_POST)){
                             <label for="category">Categories</label>
                             <select id="category" class="form-control" name="category_id">
                                 <?php
-                                 if (count($db->getCat())>0){
-                                     foreach ($db->getCat() as $item) {
-                                         ?>
-                                         <option value='<?= $item['id']; ?>'><?= $item['name']; ?></option>
-                                         <?php
-                                     }
-                                 }
+                                if (count($db->getCat()) > 0) {
+                                    foreach ($db->getCat() as $item) {
+                                        ?>
+                                        <option value='<?= $item['id']; ?>'><?= $item['name']; ?></option>
+                                    <?php
+                                    }
+                                }
                                 ?>
                                 ?>
                             </select>

@@ -1,3 +1,11 @@
+<?php
+
+if (!defined('nav')) {
+    exit('You are not authrise to check this page');
+}
+
+?>
+
 <!-- Header -->
 <header id="header">
     <!-- Nav -->

@@ -1,3 +1,11 @@
+<?php
+
+if (!defined('reply')) {
+    exit('You are not authrise to check this page');
+}
+
+?>
+
 <div class="section-row">
     <div class="section-title">
         <h2>Leave a reply</h2>

@@ -1,5 +1,6 @@
 <?php
-
+define('header', true);
+define('footer', true);
 include 'front-inc/header.php';
 
 ?>
