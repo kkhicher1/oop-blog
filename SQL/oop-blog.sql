@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 14, 2019 at 09:58 AM
+-- Generation Time: Jul 20, 2019 at 01:51 PM
 -- Server version: 10.3.15-MariaDB
 -- PHP Version: 7.3.6
 
@@ -21,6 +21,26 @@ SET time_zone = "+00:00";
 --
 -- Database: `oop-blog`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ads`
+--
+
+CREATE TABLE `ads` (
+  `id` int(11) NOT NULL,
+  `below_header` varchar(900) DEFAULT NULL,
+  `below_content` varchar(900) DEFAULT NULL,
+  `sidebar` varchar(900) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `ads`
+--
+
+INSERT INTO `ads` (`id`, `below_header`, `below_content`, `sidebar`) VALUES
+(1, 'Header ad', 'content ads', 'sidebar ads');
 
 -- --------------------------------------------------------
 
@@ -73,6 +93,49 @@ INSERT INTO `comments` (`id`, `user_name`, `user_email`, `user_ip`, `comment`, `
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `mailsetting`
+--
+
+CREATE TABLE `mailsetting` (
+  `id` int(11) NOT NULL,
+  `host` varchar(255) NOT NULL,
+  `port` int(11) NOT NULL,
+  `username` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `tls` varchar(255) NOT NULL DEFAULT 'tls',
+  `post_mail` int(11) NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `mailsetting`
+--
+
+INSERT INTO `mailsetting` (`id`, `host`, `port`, `username`, `password`, `tls`, `post_mail`) VALUES
+(1, '', 0, '', '', '', 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `menus`
+--
+
+CREATE TABLE `menus` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `redirect_slug` varchar(500) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `menus`
+--
+
+INSERT INTO `menus` (`id`, `name`, `redirect_slug`) VALUES
+(1, 'Home', '/'),
+(2, 'About', '/about.php');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `newsletter`
 --
 
@@ -121,7 +184,38 @@ INSERT INTO `posts` (`id`, `title`, `slug`, `content`, `status`, `category_id`, 
 (9, 'This is test post no 9', 'this-is-test-post-no-9', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.', 'publish', 2, '2019-07-12', '2019-07-12'),
 (10, 'Lorem Ipsum Demo', 'lorem-ipsum-demo', ' Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut interdum sem ex, vitae posuere est eleifend finibus. Ut et massa sit amet nunc auctor sodales. Sed imperdiet metus non lacus lobortis, vitae mattis lacus commodo. Nullam vitae imperdiet mi. Aliquam consectetur, erat varius commodo finibus, enim massa bibendum ante, vel mattis sapien risus vitae erat. Maecenas facilisis, neque non bibendum interdum, risus neque aliquet erat, nec accumsan sapien massa ut orci. In hac habitasse platea dictumst. Sed et velit ut purus imperdiet rutrum vel ut quam. Donec semper dapibus felis. Praesent aliquet, est vitae commodo pellentesque, lorem nulla posuere neque, nec viverra sem ipsum vel neque. Vivamus lacinia auctor eros quis aliquet. Vestibulum vel sapien urna. ', 'publish', 1, '2019-07-12', '2019-07-12'),
 (11, 'This is post no 10', 'this-is-post-no-10', 'MySQL provides a LIMIT clause that is used to specify the number of records to return.\r\n\r\nThe LIMIT clause makes it easy to code multi page results or pagination with SQL, and is very useful on large tables. Returning a large number of records can impact on performance.\r\n\r\nAssume we wish to select all records from 1 - 30 (inclusive) from a table called \"Orders\". The SQL query would then look like this:\r\n$sql = \"SELECT * FROM Orders LIMIT 30\"; ', 'publish', 4, '2019-07-12', '2019-07-12'),
-(12, 'PHP 7 Limit Data Selections From MySQL', 'php-7-limit-data-selections-from-mysql', ' $sql = \"SELECT * FROM Orders LIMIT 30\";\r\n\r\nWhen the SQL query above is run, it will return the first 30 records.\r\n\r\nWhat if we want to select records 16 - 25 (inclusive)?\r\n\r\nMysql also provides a way to handle this: by using OFFSET.\r\n\r\nThe SQL query below says \"return only 10 records, start on record 16 (OFFSET 15)\":\r\n$sql = \"SELECT * FROM Orders LIMIT 10 OFFSET 15\";\r\n\r\nYou could also use a shorter syntax to achieve the same result:\r\n$sql = \"SELECT * FROM Orders LIMIT 15, 10\";\r\n\r\nNotice that the numbers are reversed when you use a comma.', 'publish', 6, '2019-07-12', '2019-07-12');
+(12, 'PHP 7 Limit Data Selections From MySQL', 'php-7-limit-data-selections-from-mysql', ' $sql = \"SELECT * FROM Orders LIMIT 30\";\r\n\r\nWhen the SQL query above is run, it will return the first 30 records.\r\n\r\nWhat if we want to select records 16 - 25 (inclusive)?\r\n\r\nMysql also provides a way to handle this: by using OFFSET.\r\n\r\nThe SQL query below says \"return only 10 records, start on record 16 (OFFSET 15)\":\r\n$sql = \"SELECT * FROM Orders LIMIT 10 OFFSET 15\";\r\n\r\nYou could also use a shorter syntax to achieve the same result:\r\n$sql = \"SELECT * FROM Orders LIMIT 15, 10\";\r\n\r\nNotice that the numbers are reversed when you use a comma.', 'publish', 6, '2019-07-12', '2019-07-12'),
+(13, 'This is post no 11', 'this-is-post-no-11', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.', 'publish', 4, '2019-07-15', '2019-07-15'),
+(14, 'Testing Mail System', 'testing-mail-system', ' Aenean porta risus ac ligula mattis mollis. In sit amet nulla diam. Sed laoreet aliquam risus, nec blandit lorem auctor non. Curabitur accumsan nunc metus, et rutrum lacus suscipit vel. Duis congue felis a ex auctor rutrum. Quisque non convallis mi, sed pulvinar turpis. Nam at consequat odio. Ut tempor, urna non gravida ornare, nisl mi sodales elit, quis consequat tellus urna ut nulla. Etiam eu nulla nunc. Cras vitae porta tortor, id auctor sem. Donec vulputate justo vel est pharetra, non pretium purus malesuada. ', 'publish', 4, '2019-07-15', '2019-07-15'),
+(17, 'Mail testing', 'mail-testing', ' Maecenas eu tellus rhoncus, volutpat velit eget, venenatis velit. Praesent euismod enim urna, et sodales orci tincidunt non. Quisque eget mollis felis. Curabitur a placerat tortor, vel auctor lacus. Mauris porttitor consectetur enim. Quisque tempus tortor tortor, pretium tempor lectus semper dictum. Proin turpis nulla, accumsan ac hendrerit ac, pellentesque ac augue. Praesent in mattis turpis. Curabitur euismod, felis ut bibendum imperdiet, ante metus semper nisi, sed rhoncus sem mauris nec ligula. Cras nulla velit, viverra sit amet est eu, scelerisque congue velit. Vestibulum sit amet arcu venenatis, molestie est vel, commodo orci. Donec porta urna quis lorem lobortis vehicula ut nec quam. ', 'publish', 4, '2019-07-15', '2019-07-15'),
+(18, 'Php using phpmailer error data not accepted', 'php-using-phpmailer-error-data-not-accepted', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.', 'publish', 6, '2019-07-15', '2019-07-15'),
+(19, 'How can I prevent SQL injection in PHP?', 'how-can-i-prevent-sql-injection-in-php?', 'There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don\'t look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn\'t anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc.', 'publish', 6, '2019-07-15', '2019-07-15'),
+(20, 'Sending multiple emails with PHPmailer', 'sending-multiple-emails-with-phpmailer', 'Edit: I forgot I\'d created the SendMail(); function myself, which is why the explanation doesn\'t mention at first what it does.\r\n\r\nI\'m having some trouble with PHPMailer (https://github.com/PHPMailer/PHPMailer) when attempting to send two emails, one directly after the other.\r\n\r\nThe script is almost completely \'out of the box\', with only a few modifications such as a foreach loop to allow for multiple addresses, and everything still works perfectly.\r\n\r\nHowever, if I attempt to call more than one instance of SendMail(); I get the error message:', 'publish', 6, '2019-07-15', '2019-07-15'),
+(21, 'Sending multiple emails with PHPmailer', 'sending-multiple-emails-with-phpmailer', 'Edit: I forgot I\'d created the SendMail(); function myself, which is why the explanation doesn\'t mention at first what it does.\r\n\r\nI\'m having some trouble with PHPMailer (https://github.com/PHPMailer/PHPMailer) when attempting to send two emails, one directly after the other.\r\n\r\nThe script is almost completely \'out of the box\', with only a few modifications such as a foreach loop to allow for multiple addresses, and everything still works perfectly.\r\n\r\nHowever, if I attempt to call more than one instance of SendMail(); I get the error message:', 'publish', 6, '2019-07-15', '2019-07-15'),
+(22, 'Legacy versions', 'legacy-versions', 'PHPMailer 5.2 (which is compatible with PHP 5.0 - 7.0) is no longer being supported for feature updates, and will only be receiving security updates from now on. You will find the latest version of 5.2 in the 5.2-stable branch, and future versions of 5.2 will be tagged with 5.2.x version numbers, so existing Composer configs should remain working. If you\'re using PHP 5.5 or later, we recommend you make the necessary changes to switch to the 6.0 release.', 'publish', 6, '2019-07-15', '2019-07-15'),
+(23, 'SMTP Error: data not accepted.SMTP server error: DATA END ', 'smtp-error:-data-not-accepted.smtp-server-error:-data-end-', 'Mar 10, 2016 - Sometimes, When i send mail with Attachment, it gives error data not accepted.SMTP server error: DATA END command failed. Without attachment it doesn\'t gives error.', 'publish', 6, '2019-07-15', '2019-07-15'),
+(24, 'PHPlist error - SMTP Error: Data not accepted. SMTP server error', 'phplist-error---smtp-error:-data-not-accepted.-smtp-server-error', 'Oct 6, 2014 - Hello, While I understand why you removed the specific information, there is very little I can tell you because that information is not there.', 'publish', 6, '2019-07-15', '2019-07-15'),
+(25, 'The following SMTP Error: Data not accepted.', 'the-following-smtp-error:-data-not-accepted.', 'Aug 30, 2017 - I just ran into a problem with the sending of a campaign late last night. This system is using PHPList v 3.3.1. Things have worked well for 4 or', 'publish', 6, '2019-07-15', '2019-07-15');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `postsettings`
+--
+
+CREATE TABLE `postsettings` (
+  `id` int(11) NOT NULL,
+  `post_content_length` int(11) NOT NULL,
+  `no_of_posts` int(11) NOT NULL,
+  `sidebar_active` int(11) DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `postsettings`
+--
+
+INSERT INTO `postsettings` (`id`, `post_content_length`, `no_of_posts`, `sidebar_active`) VALUES
+(1, 150, 10, 1);
 
 -- --------------------------------------------------------
 
@@ -144,7 +238,7 @@ CREATE TABLE `settings` (
 --
 
 INSERT INTO `settings` (`id`, `site_name`, `site_subtitle`, `site_logo`, `footer_copyright`, `header_code`, `footer_code`) VALUES
-(1, 'Exam Hindi', 'MCQ Hindi', 'assets/site-logo/smily.png', 'Copyright 2019 All rights reserved | Exam Hindi', '&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdnjs.cloudflare.com/ajax/libs/foundation-emails/2.2.1/foundation-emails.min.css&quot; integrity=&quot;sha256-eCv+ZgspLOV4CCn3RbJ0zvEyFi3BYlGManp0JAJGXlQ=&quot; crossorigin=&quot;anonymous&quot; /&gt;', '&lt;script src=&quot;https://cdnjs.cloudflare.com/ajax/libs/vuejs-paginate/2.1.0/index.js&quot; integrity=&quot;sha256-IWdCh9Pr6cR1KPqOPUu06+BZYQFSi7smSgWYPo87IAQ=&quot; crossorigin=&quot;anonymous&quot;&gt;&lt;/script&gt;');
+(1, 'Exam Hindi', 'MCQ Hindi', 'assets/site-logo/smily.png', 'Copyright 2019 All rights reserved | Exam Hindi', '', '');
 
 -- --------------------------------------------------------
 
@@ -204,6 +298,12 @@ INSERT INTO `users` (`id`, `name`, `username`, `email`, `password`, `photo`, `lo
 --
 
 --
+-- Indexes for table `ads`
+--
+ALTER TABLE `ads`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `categories`
 --
 ALTER TABLE `categories`
@@ -216,6 +316,18 @@ ALTER TABLE `comments`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `mailsetting`
+--
+ALTER TABLE `mailsetting`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `menus`
+--
+ALTER TABLE `menus`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `newsletter`
 --
 ALTER TABLE `newsletter`
@@ -225,6 +337,12 @@ ALTER TABLE `newsletter`
 -- Indexes for table `posts`
 --
 ALTER TABLE `posts`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `postsettings`
+--
+ALTER TABLE `postsettings`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -250,6 +368,12 @@ ALTER TABLE `users`
 --
 
 --
+-- AUTO_INCREMENT for table `ads`
+--
+ALTER TABLE `ads`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT for table `categories`
 --
 ALTER TABLE `categories`
@@ -262,16 +386,34 @@ ALTER TABLE `comments`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
+-- AUTO_INCREMENT for table `mailsetting`
+--
+ALTER TABLE `mailsetting`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `menus`
+--
+ALTER TABLE `menus`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
 -- AUTO_INCREMENT for table `newsletter`
 --
 ALTER TABLE `newsletter`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `posts`
 --
 ALTER TABLE `posts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+
+--
+-- AUTO_INCREMENT for table `postsettings`
+--
+ALTER TABLE `postsettings`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `settings`
